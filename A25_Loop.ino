@@ -31,21 +31,47 @@ void loop() {
       case 5:
         checkOrder();  //calls a function that reads the HMI to determine what [Tab A30]
         executeOrder();
+        conveyorTimer = millis();
+        while (millis() - conveyorTimer <= conveyorWait) {}
+        conveyorStop();
         break;
       case 6:
         gateCentering();  //DO NOT CALL IF THERE IS MATERIAL IN THE HOPPERS! a small function to send the gate back to neutral.  [Tab A32]
         break;
       case 7:
-        feedtoLabler();  //Calls function that sends filled containers to the next module (Labeler) [Tab A30]
+        sensorCalibration();  //[Tab A31]
+        calibrationUpdate();  //[Tab A31]. 
         break;
       case 8:
-        systemsCheck();  //Turn on and off all relays in the system [Tab A30]
+        //systemsCheck();  //Turn on and off all relays in the system [Tab A30]
+        // vacuumON();
+        // digitalWrite(actuatorG3, LOW);
+        // delay(3000);
+        // digitalWrite(actuatorG3, HIGH);
+        // delay(3000);
+        // vacuumOFF();
+        applyLabel();
         break;
       case 9:
         primePneumatics();  //Call to Activate to indivdually fire all the pneumatics and relays to test the system and get air in all the lines [Tab A30]
         break;
 
+      case 10:
+        unsigned long irTime = millis();
+        unsigned long irReadTime = 60000;
+        while (millis() - irTime <= irReadTime) {
+          irRefresh();
+          printIR();
+        }
+        break;
+
+      case 11:
+        stateCheck();  //Call to Activate to indivdually fire all the pneumatics and relays to test the system and get air in all the lines [Tab A30]
+        break;
+
+
       default:
+        redLEDfastFlash(3);
         Serial.println("Default state");  //Deafulat state where nothing is active
         break;
     }

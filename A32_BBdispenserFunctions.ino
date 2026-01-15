@@ -5,15 +5,16 @@ void dispBbblue() {    // Function that handles the despencing of blue material 
     irRefresh();                  //update sensors [Tab A31]
     delay(irsensDelay);           //A delay that slows down the updating of IRsensors to help them be more reliable with their detection [Tab A20]
   }
+  Serial.println("Container detected at IR3");
   printIR();
   digitalWrite(bbdispBludr1b, LOW);  //Move Gate to the side
   Serial.println("Blue Opening");
   delay(blueGateTimer);                       //Delays for the set time to allow bbs to flow [Tab A20]
   Serial.println("Blue Closing");
   while (digitalRead(reedSw1) == HIGH) {  //loop to move the gate back to neutral (Travel in opposite direction until neutral postition is achieved) [Tab A10]
-    delay(blueTimeCorrection);                //Extra time need move the gate into proper postion [Tab A10]
+    //delay(blueTimeCorrection);                //Extra time need move the gate into proper postion [Tab A10]
     digitalWrite(bbdispReddr1a, LOW);     //Moves gate into the opposite direction [Tab A10]
-    digitalWrite(bbdispBludr1b, HIGH);    //turns off original air direction off [Tab A10]
+    //digitalWrite(bbdispBludr1b, HIGH);    //turns off original air direction off [Tab A10]
     
   }
   digitalWrite(bbdispBludr1b, LOW);   //Switches off return air direction [Tab A10]
@@ -30,6 +31,7 @@ void dispBbred() {     //Function that handles the despencing of blue material i
     irRefresh();                  //update sensors [Tab A31]
     delay(irsensDelay);           //A delay that slows down the updating of IRsensors to help them be more reliable with their detection [Tab A20]
   }
+  Serial.println("Container detected at IR3");
   printIR();
   //See Blue Dispence for the same logic and note its just opposite
   digitalWrite(bbdispReddr1a, LOW);
